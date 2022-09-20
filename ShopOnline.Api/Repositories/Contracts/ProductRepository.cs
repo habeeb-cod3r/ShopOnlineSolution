@@ -30,7 +30,7 @@ namespace ShopOnline.Api.Repositories.Contracts
 
         public Task<Product> GetItem(int id)
         {
-
+            throw new NotImplementedException();
         }
     }
 }
