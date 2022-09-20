@@ -12,7 +12,7 @@ namespace ShopOnline.Web.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            Products = (IEnumerable<ProductDto>)await ProductService.GetItems();
+            Products = await ProductService.GetItems();
         }
     }
 }
