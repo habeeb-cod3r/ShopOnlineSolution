@@ -1,7 +1,8 @@
 ﻿using ShopOnline.Models.DTOs;
+using ShopOnline.Web.Services.Contracts;
 using System.Net.Http.Json;
 
-namespace ShopOnline.Web.Services.Contracts
+namespace ShopOnline.Web.Services
 {
     public class ProductService : IProductService
     {
@@ -9,7 +10,7 @@ namespace ShopOnline.Web.Services.Contracts
 
         public ProductService(HttpClient httpClient)
         {
-            _httpClient=httpClient;
+            _httpClient = httpClient;
         }
         public async Task<IEnumerable<ProductDto>> GetItems()
         {
@@ -20,7 +21,6 @@ namespace ShopOnline.Web.Services.Contracts
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
