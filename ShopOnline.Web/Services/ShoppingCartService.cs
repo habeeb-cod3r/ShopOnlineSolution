@@ -11,11 +11,13 @@ namespace ShopOnline.Web.Services
     public class ShoppingCartService : IShoppingCartService
     {
         private readonly HttpClient _httpClient;
+        public event Action<int> OnShoppingCartChanged;
 
         public ShoppingCartService(HttpClient httpClient)
         {
             _httpClient=httpClient;
         }
+
         public async Task<CartItemDto> AddItem(CartItemToAddDto cartItemToAddDto)
         {
             try
@@ -86,12 +88,20 @@ namespace ShopOnline.Web.Services
 
         }
 
+        public void RaiseEventOnShppingCartChanged(int totalQty)
+        {
+            if (OnShoppingCartChanged != null)
+            {
+                OnShoppingCartChanged.Invoke(totalQty);
+            }
+        }
+
         public async Task<CartItemDto> UpdateQty(CartItemQtyUpdateDto cartItemQtyUpdateDto)
         {
             try
             {
                 var jsonRequest = JsonConvert.SerializeObject(cartItemQtyUpdateDto);
-                var content = new StringContent(jsonRequest,Encoding.UTF8, "application/json-patch+json");
+                var content = new StringContent(jsonRequest, Encoding.UTF8, "application/json-patch+json");
                 var response = await _httpClient.PatchAsync($"api/ShoppingCart/{cartItemQtyUpdateDto.CartItemId}", content);
 
                 if (response.IsSuccessStatusCode)
